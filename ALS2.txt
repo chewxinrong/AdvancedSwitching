@@ -1,5 +1,5 @@
 !
-! Last configuration change at 01:16:49 UTC Mon Mar 1 1993
+! Last configuration change at 01:07:48 UTC Mon Mar 1 1993
 !
 version 15.0
 no service pad
@@ -15,9 +15,6 @@ boot-end-marker
 !
 no aaa new-model
 system mtu routing 1500
-vtp version 3
-vtp domain CISCO
-vtp mode server 
 !
 !
 no ip domain-lookup
@@ -30,28 +27,18 @@ ip domain-name CCNP.NET
 !
 !
 !
-spanning-tree mode pvst
+!
+spanning-tree mode mst
 spanning-tree extend system-id
 !
+spanning-tree mst configuration
+ name 1
+ revision 1
+ instance 1 vlan 10, 20
+ instance 2 vlan 100, 110
+!
+!
 vlan internal allocation policy ascending
-!
-vlan 10
- name Staff
-!
-vlan 20
- name Students
-!
-vlan 100
- name Management
-!
-vlan 110
- name Voice
-!
-vlan 800
- name Native
-!
-vlan 999
- name Parking
 !
 !
 !
@@ -96,58 +83,76 @@ interface FastEthernet0/6
  shutdown
 !
 interface FastEthernet0/7
- shutdown
+ switchport access vlan 10
+ switchport mode access
 !
 interface FastEthernet0/8
- shutdown
+ switchport access vlan 10
+ switchport mode access
 !
 interface FastEthernet0/9
- shutdown
+ switchport access vlan 10
+ switchport mode access
 !
 interface FastEthernet0/10
- shutdown
+ switchport access vlan 10
+ switchport mode access
 !
 interface FastEthernet0/11
- shutdown
+ switchport access vlan 10
+ switchport mode access
 !
 interface FastEthernet0/12
- shutdown
+ switchport access vlan 10
+ switchport mode access
 !
 interface FastEthernet0/13
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/14
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/15
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/16
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/17
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/18
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/19
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/20
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/21
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/22
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/23
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface FastEthernet0/24
- shutdown
+ switchport access vlan 20
+ switchport mode access
 !
 interface GigabitEthernet0/1
  shutdown
@@ -159,8 +164,12 @@ interface Vlan1
  no ip address
  shutdown
 !
+interface Vlan100
+ ip address 10.0.100.102 255.255.255.0
+!
 ip http server
 ip http secure-server
+!
 !
 !
 line con 0
