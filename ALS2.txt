@@ -15,8 +15,9 @@ boot-end-marker
 !
 no aaa new-model
 system mtu routing 1500
+vtp version 3
 vtp domain CISCO
-vtp mode transparent
+vtp mode server 
 !
 !
 no ip domain-lookup
