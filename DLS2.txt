@@ -1,5 +1,5 @@
 !
-! Last configuration change at 13:41:52 UTC Wed May 8 2024
+! Last configuration change at 01:40:20 UTC Thu Aug 30 2018
 !
 version 16.6
 no service pad
@@ -39,39 +39,63 @@ ip domain name CCNP.NET
 !
 !
 !
-vtp version 3
-vtp domain CISCO
-vtp mode transparent
 cpp system-default
 !
+crypto pki trustpoint TP-self-signed-4128955938
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4128955938
+ revocation-check none
+ rsakeypair TP-self-signed-4128955938
 !
+!
+crypto pki certificate chain TP-self-signed-4128955938
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34313238 39353539 3338301E 170D3138 30383330 30303431
+  31315A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 31323839
+  35353933 38308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 01009EC4 93BA5507 D77EE565 0988E081 A4D65B6B A3047CEE 525A2BD4
+  C7C1F3D7 F050E5DC 314EE2F4 A7D10BF6 BF054865 5F905979 E95B9046 3FFE62E6
+  3B0061B5 6776FBF0 85E0DE04 A6AFDB05 D20A00BA 487B2877 38139C25 B6C234E3
+  C18C7299 95615631 22F92194 8EAB33D8 2FAC64E8 C5EC8594 B4465D0E CD732E32
+  8C9B94A2 E22E7576 8104283E A761C325 30909018 23B97A86 ED914AC8 32D83165
+  BA61B90B 21BA49BD C670E289 CBFAACF4 211AE5EB B7261A9F 8DD4C241 3AC372B1
+  BB93D4CD 89884212 EA1FA0BF D70B4E09 13BE05CF EA49E75C 1FBB2118 292813B8
+  8F1C1E07 60C3D446 C2141051 89FDC12A 1AE783E9 63AFC03D 69BBCCC9 F4A957FA
+  E59D1C2B 33470203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF
+  301F0603 551D2304 18301680 146EED3D B5C58F51 6245A716 5B18E3B5 09409B2B
+  0F301D06 03551D0E 04160414 6EED3DB5 C58F5162 45A7165B 18E3B509 409B2B0F
+  300D0609 2A864886 F70D0101 05050003 82010100 4BD5A34E F161E898 E7CCD793
+  EBFD5A18 017A929B 7D86B232 5A84F924 49639ED4 2451D7CA A576D358 66F7C41E
+  22AEF3A6 1D0C686E D1A4420A 8599F308 135C3443 E7A5FA5F 9FED76E4 518A2C9F
+  D9B1EEA4 91F27ECD 9A327163 1DDB5C4E 57E5EB92 C167D8C6 13F8E24C B6BDC296
+  A2A34BC3 75592E00 3BEC4526 22F66FCA 9328FE5A 724F77F9 568E2D05 1FD45013
+  1927CBB1 74333F90 8C1D6B68 FAD04543 EB2B3082 EE533564 BF15974A 9FC83A04
+  CD0DCA40 159B5D74 C16B4D72 A04CA2D1 3157BB2D 8F3CF540 0F69A681 4E64C1C1
+  62518E17 7644B144 83112E6C 758145DA 4F06B4DB 6BE4C820 EA3CA110 F61AEF63
+  72F27F80 5E211ED8 9DAFECF1 C741385B 878A7A66
+        quit
 !
 diagnostic bootup level minimal
-spanning-tree mode rapid-pvst
+!
+spanning-tree mode mst
 spanning-tree extend system-id
+!
+spanning-tree mst configuration
+ name 1
+ revision 1
+ instance 1 vlan 10, 20
+ instance 2 vlan 100, 110
+!
+spanning-tree mst 1 priority 28672
+spanning-tree mst 2 priority 24576
 !
 !
 redundancy
  mode sso
 !
-!
-vlan 10
- name Staff
-!
-vlan 20
- name Students
-!
-vlan 100
- name Management
-!
-vlan 110
- name Voice
-!
-vlan 800
- name Native
-!
-vlan 999
- name Parking
 !
 !
 class-map match-any system-cpp-police-topology-control
@@ -165,6 +189,7 @@ interface Port-channel4
 !
 interface Port-channel10
  no switchport
+ ip address 172.16.200.2 255.255.255.252
 !
 interface Port-channel20
  no switchport
@@ -198,80 +223,137 @@ interface GigabitEthernet1/0/4
 !
 interface GigabitEthernet1/0/5
  no switchport
+ no ip address
  channel-group 10 mode active
 !
 interface GigabitEthernet1/0/6
  no switchport
+ no ip address
  channel-group 10 mode active
 !
 interface GigabitEthernet1/0/7
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/8
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/9
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/10
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/11
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/12
- shutdown
+ no switchport
+ ip address 192.168.1.2 255.255.255.252
 !
 interface GigabitEthernet1/0/13
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/14
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/15
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/16
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/17
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/18
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/19
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/20
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/21
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/22
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/23
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/0/24
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/1/1
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/1/2
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/1/3
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface GigabitEthernet1/1/4
+ switchport access vlan 999
+ switchport mode access
  shutdown
 !
 interface Vlan1
  no ip address
+!
+interface Vlan10
+ ip address 10.0.10.3 255.255.255.0
+!
+interface Vlan20
+ ip address 10.0.20.3 255.255.255.0
+!
+interface Vlan100
+ ip address 10.0.100.3 255.255.255.0
+!
+interface Vlan110
+ ip address 10.0.110.3 255.255.255.0
 !
 ip forward-protocol nd
 ip http server
