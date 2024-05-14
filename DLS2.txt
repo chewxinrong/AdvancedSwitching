@@ -41,7 +41,7 @@ ip domain name CCNP.NET
 !
 vtp version 3
 vtp domain CISCO
-vtp mode transparent
+vtp mode server
 cpp system-default
 !
 !
