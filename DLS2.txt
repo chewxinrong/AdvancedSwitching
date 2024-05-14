@@ -39,6 +39,7 @@ ip domain name CCNP.NET
 !
 !
 !
+vtp version 3
 vtp domain CISCO
 vtp mode transparent
 cpp system-default
@@ -163,6 +164,7 @@ interface Port-channel4
  switchport mode trunk
 !
 interface Port-channel10
+ no switchport
 !
 interface Port-channel20
  no switchport
@@ -195,9 +197,11 @@ interface GigabitEthernet1/0/4
  channel-group 2 mode on
 !
 interface GigabitEthernet1/0/5
+ no switchport
  channel-group 10 mode active
 !
 interface GigabitEthernet1/0/6
+ no switchport
  channel-group 10 mode active
 !
 interface GigabitEthernet1/0/7
