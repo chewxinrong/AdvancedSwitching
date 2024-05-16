@@ -36,7 +36,9 @@ ip domain name CCNP.NET
 !
 !
 !
-!
+vtp version 3
+vtp domain CISCO
+vtp mode server
 !
 !
 cpp system-default
@@ -182,14 +184,17 @@ policy-map system-cpp-policy
 interface Port-channel1
  switchport trunk native vlan 800
  switchport mode trunk
+ no shutdown
 !
 interface Port-channel3
  switchport trunk native vlan 800
  switchport mode trunk
+ no shutdown
 !
 interface Port-channel10
  no switchport
  ip address 172.16.200.1 255.255.255.252
+ no shutdown
 !
 interface GigabitEthernet0/0
  vrf forwarding Mgmt-vrf
@@ -202,31 +207,37 @@ interface GigabitEthernet1/0/1
  switchport trunk native vlan 800
  switchport mode trunk
  channel-group 1 mode desirable
+ no shutdown
 !
 interface GigabitEthernet1/0/2
  switchport trunk native vlan 800
  switchport mode trunk
  channel-group 1 mode desirable
+ no shutdown
 !
 interface GigabitEthernet1/0/3
  switchport trunk native vlan 800
  switchport mode trunk
  channel-group 3 mode on
+ no shutdown
 !
 interface GigabitEthernet1/0/4
  switchport trunk native vlan 800
  switchport mode trunk
  channel-group 3 mode on
+ no shutdown
 !
 interface GigabitEthernet1/0/5
  no switchport
  no ip address
  channel-group 10 mode active
+ no shutdown
 !
 interface GigabitEthernet1/0/6
  no switchport
  no ip address
  channel-group 10 mode active
+ no shutdown
 !
 interface GigabitEthernet1/0/7
  switchport access vlan 999
@@ -251,6 +262,7 @@ interface GigabitEthernet1/0/10
 interface GigabitEthernet1/0/11
  no switchport
  ip address 192.168.0.2 255.255.255.252
+ no shutdown
 !
 interface GigabitEthernet1/0/12
  switchport access vlan 999
@@ -343,15 +355,19 @@ interface Vlan1
 !
 interface Vlan10
  ip address 10.0.10.2 255.255.255.0
+ no shutdown
 !
 interface Vlan20
  ip address 10.0.20.2 255.255.255.0
+ no shutdown
 !
 interface Vlan100
  ip address 10.0.100.2 255.255.255.0
+ no shutdown
 !
 interface Vlan110
  ip address 10.0.110.2 255.255.255.0
+ no shutdown
 !
 ip forward-protocol nd
 ip http server

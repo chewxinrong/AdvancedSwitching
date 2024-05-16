@@ -36,6 +36,9 @@ ip domain name CCNP.NET
 !
 !
 !
+vtp version 3
+vtp domain CISCO
+vtp mode server
 !
 !
 !
@@ -97,6 +100,20 @@ redundancy
  mode sso
 !
 !
+vlan 10
+ name Staff
+vlan 20
+ name Students
+vlan 100
+ name Management
+vlan 110
+ name Voice
+vlan 150
+  name Server_Farm
+vlan 800
+ name Native
+vlan 999
+ name Parking
 !
 class-map match-any system-cpp-police-topology-control
   description Topology control
@@ -182,18 +199,22 @@ policy-map system-cpp-policy
 interface Port-channel2
  switchport trunk native vlan 800
  switchport mode trunk
+ no shutdown
 !
 interface Port-channel4
  switchport trunk native vlan 800
  switchport mode trunk
+ no shutdown
 !
 interface Port-channel10
  no switchport
  ip address 172.16.200.2 255.255.255.252
+ no shutdown
 !
 interface Port-channel20
  no switchport
  no ip address
+ no shutdown
 !
 interface GigabitEthernet0/0
  vrf forwarding Mgmt-vrf
@@ -205,31 +226,37 @@ interface GigabitEthernet1/0/1
  switchport trunk native vlan 800
  switchport mode trunk
  channel-group 4 mode desirable
+ no shutdown
 !
 interface GigabitEthernet1/0/2
  switchport trunk native vlan 800
  switchport mode trunk
  channel-group 4 mode desirable
+ no shutdown
 !
 interface GigabitEthernet1/0/3
  switchport trunk native vlan 800
  switchport mode trunk
  channel-group 2 mode on
+ no shutdown
 !
 interface GigabitEthernet1/0/4
  switchport trunk native vlan 800
  switchport mode trunk
  channel-group 2 mode on
+ no shutdown
 !
 interface GigabitEthernet1/0/5
  no switchport
  no ip address
  channel-group 10 mode active
+ no shutdown
 !
 interface GigabitEthernet1/0/6
  no switchport
  no ip address
  channel-group 10 mode active
+ no shutdown
 !
 interface GigabitEthernet1/0/7
  switchport access vlan 999
