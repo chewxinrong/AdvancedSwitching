@@ -1,3 +1,16 @@
+hostname GATEWAY
+!
+! 
+interface Loopback0
+ ip address 203.0.113.1 255.255.255.255
+!
+!
+router eigrp 100
+ no auto-summary
+ network 172.16.0.0 0.0.255.255
+!
+! 
+
 int g0/0/0
 ip add 192.168.1.1 255.255.255.252
 no shutdown
